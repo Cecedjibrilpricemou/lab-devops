@@ -20,7 +20,8 @@ jobs:
         uses: semgrep/semgrep-action@v1
         with:
           config: p/security-audit
-           auditOnPush: true 
+          auditOnPush: true
+
 
   # ÉTAPE 2 : L'exécution de nos tests unitaires
   validation-tests:
