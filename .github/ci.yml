@@ -1,0 +1,42 @@
+name: Pipeline CI Lab
+
+# Déclenche le tapis roulant à chaque fois qu'on pousse du code ou ouvre une PR
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # ÉTAPE 1 : Le Scan de Sécurité automatique
+  securite:
+    name: Verification Securite (Semgrep)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le code du dépôt
+        uses: actions/checkout@v4
+
+      - name: Lancer Semgrep
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: p/security-audit
+
+  # ÉTAPE 2 : L'exécution de nos tests unitaires
+  validation-tests:
+    name: Lancer les Tests Vitest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le code du dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Installer les dependances
+        run: npm ci
+
+      - name: Executer Vitest
+        run: npm test
