@@ -5,4 +5,5 @@ export function calculerTTC(prixHT) {
 }
 
 // FAILLE DE SÉCURITÉ : Clé secrète laissée en clair dans le code !
+// Un commentaire pour forcer la mise à jour
 const AWS_SECRET_KEY = "AKIAIOSFODNN7EXAMPLE_SUPER_SECRET_KEY";
