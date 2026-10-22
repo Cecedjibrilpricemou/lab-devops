@@ -16,11 +16,16 @@ jobs:
       - name: Recuperer le code du dépôt
         uses: actions/checkout@v4
 
-      - name: Lancer Semgrep
-        uses: semgrep/semgrep-action@v1
+      - name: Installer Python
+        uses: actions/setup-python@v5
         with:
-          config: p/security-audit
-          auditOnPush: true
+          python-version: '3.10'
+
+      - name: Installer Semgrep CLI
+        run: pip install semgrep
+
+      - name: Executer le scan de securite
+        run: semgrep scan --config=p/security-audit --error
 
 
   # ÉTAPE 2 : L'exécution de nos tests unitaires
